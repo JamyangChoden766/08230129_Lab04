@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>About Me</title>
+    <style>
+        body{margin:0;font-family:Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#071027;color:#e6eef8}
+        .wrap{max-width:860px;margin:28px auto;padding:20px}
+        .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04)}
+        .profile{display:flex;gap:18px;align-items:center}
+        .avatar{width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#60a5fa,#7dd3fc);color:#04202b;font-weight:700;font-size:1.4rem}
+        h1{margin:0 0 6px 0}
+        .meta{color:#94a3b8;margin-top:6px}
+        .bio{margin-top:12px;line-height:1.5;color:#dbeafe}
+        .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+        .info{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px}
+        a.btn{display:inline-block;margin-top:12px;padding:8px 12px;background:#7dd3fc;color:#04202b;border-radius:10px;text-decoration:none;font-weight:600}
+        footer{margin-top:18px;color:#94a3b8;text-align:center}
+        @media (max-width:520px){.profile{flex-direction:column;align-items:flex-start}.info-grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="card">
+            <div class="profile">
+                <div class="avatar" aria-hidden="true">JC</div>
+                <div>
+                    <h1>About Me</h1>
+                    <div class="meta">
+                        {% if about %}
+                            {{ about.name|default:"Student" }} • {{ about.student_id|default:"ID N/A" }}
+                        {% else %}
+                            Student • ID N/A
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="bio">
+                {% if about and about.bio %}
+                    {{ about.bio }}
+                {% else %}
+                    <p>I am learning web development and building small projects to practice new skills. This page holds my contact and background details.</p>
+                {% endif %}
+            </div>
+
+            <div class="info-grid">
+                <div class="info">
+                    <strong>Email</strong>
+                    <div class="meta">
+                        {% if about and about.email %}
+                            <a href="mailto:{{ about.email }}" style="color:#cbeafe">{{ about.email }}</a>
+                        {% else %}
+                            Not provided
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="info">
+                    <strong>Skills</strong>
+                    <div class="meta">
+                        {% if about and about.skills %}
+                            {{ about.skills }}
+                        {% else %}
+                            HTML • CSS • Python (learning)
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <a class="btn" href="{% url 'index' %}">Back to Journey</a>
+        </div>
+
+        <footer>
+            <div>Made with curiosity • simple Django templates</div>
+        </footer>
+    </div>
+</body>
+</html>

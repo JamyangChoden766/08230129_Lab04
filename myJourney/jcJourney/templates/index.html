@@ -1,0 +1,72 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>My Learning Journey</title>
+    <style>
+        :root{--bg:#0f1724;--card:#0b1220;--accent:#7dd3fc;--muted:#94a3b8;--glass:rgba(255,255,255,0.04)}
+        html,body{height:100%;margin:0;font-family:Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,#071027 0%, #0b1220 60%);color:#e6eef8}
+        .container{max-width:1000px;margin:32px auto;padding:24px}
+        header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+        header h1{font-size:1.6rem;letter-spacing:0.6px;margin:0}
+        nav a{color:var(--accent);text-decoration:none;padding:8px 12px;border-radius:8px;background:transparent}
+        .hero{background:linear-gradient(90deg, rgba(125,211,252,0.06), transparent);padding:18px;border-radius:12px;display:flex;gap:16px;align-items:center}
+        .hero .intro{flex:1}
+        .hero h2{margin:0 0 6px 0;font-size:1.3rem}
+        .hero p{margin:0;color:var(--muted)}
+        .btn{display:inline-block;margin-top:10px;padding:8px 14px;background:var(--accent);color:#04202b;border-radius:10px;text-decoration:none;font-weight:600}
+        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}
+        .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.04);padding:14px;border-radius:12px}
+        .card h3{margin:0 0 6px 0}
+        .meta{font-size:0.9rem;color:var(--muted);margin-top:8px}
+        footer{margin-top:28px;color:var(--muted);font-size:0.9rem;text-align:center}
+        .empty{padding:24px;text-align:center;color:var(--muted);background:var(--glass);border-radius:10px}
+        @media (max-width:420px){.container{padding:12px}header h1{font-size:1.2rem}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>My Learning Journey</h1>
+            <nav>
+                <a href="{% url 'about' %}">About Me</a>
+            </nav>
+        </header>
+
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="intro">
+                <h2 id="hero-title">Exploring, Building, and Growing</h2>
+                <p>Small projects, experiments, and notes from my learning path. Each entry captures what I built and the technologies I used.</p>
+                <a class="btn" href="{% url 'about' %}">Learn about me</a>
+            </div>
+            <div aria-hidden="true" style="width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#7dd3fc,#60a5fa);display:flex;align-items:center;justify-content:center;color:#04202b;font-weight:700;font-size:1.25rem">JC</div>
+        </section>
+
+        <main>
+            {% if journeys %}
+            <div class="grid" role="list">
+                {% for j in journeys %}
+                <article class="card" role="listitem">
+                    <h3>{{ j.title }}</h3>
+                    <p>{{ j.description }}</p>
+                    <div class="meta">
+                        <div><strong>Started:</strong> {{ j.date_started }}</div>
+                        <div><strong>Technologies:</strong> {{ j.technologies_used }}</div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty">No journey entries yet. Try adding your first learning note!</div>
+            {% endif %}
+        </main>
+
+        <footer>
+            <div>Made with curiosity • <a style="color:var(--accent);text-decoration:none" href="{% url 'about' %}">About</a></div>
+        </footer>
+    </div>
+</body>
+</html>
